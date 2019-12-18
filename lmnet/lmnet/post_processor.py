@@ -63,10 +63,14 @@ class FormatYoloV2(Processor):
         batch_size = len(outputs)
         num_cell_y, num_cell_x = self.num_cell[0], self.num_cell[1]
 
+        print("before reshape: {}".format(outputs.shape))
+
         outputs = np.reshape(
             outputs,
             [batch_size, num_cell_y, num_cell_x, self.boxes_per_cell, self.num_classes + 5]
         )
+
+        print("after reshape: {}".format(outputs.shape))
 
         outputs = np.split(outputs, [self.num_classes, self.num_classes+1, self.num_classes+1+4], axis=4)
 
